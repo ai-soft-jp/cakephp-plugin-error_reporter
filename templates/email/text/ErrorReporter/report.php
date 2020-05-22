@@ -7,15 +7,20 @@ error_reporting(0);
 
 echo "An error occured in processing:\n";
 if ($request) {
-    $params = $request->getServerParams();
     $path = $request->getUri()->getPath();
     $query = $request->getUri()->getQuery();
     if ($query !== '') {
         $path .= "?{$query}";
     }
+    if ($request instanceof ServerRequest) {
+        $remoteAddr = $request->clientIp();
+    } else {
+        $params = $request->getServerParams();
+        $remoteAddr = $params['REMOTE_ADDR'] ?? null;
+    }
     printf("    %s %s\n", $request->getMethod(), $path);
     printf("\n");
-    printf("Remote Host = %s\n", $params['REMOTE_ADDR'] ?? 'N/A');
+    printf("Remote Host = %s\n", $remoteAddr ?: 'N/A');
     printf("User Agent = %s\n", $request->getHeaderLine('User-Agent') ?: 'N/A');
     printf("Referer = %s\n", $request->getHeaderLine('Referer') ?: 'N/A');
 } else {
