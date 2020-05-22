@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<ruleset name="coupon-admin4">
+    <description>coupon-admin4 phpcs</description>
+
+    <file>./config</file>
+    <file>./src</file>
+    <file>./templates</file>
+    <!-- <file>./tests</file> -->
+
+    <arg name="extensions" value="php" />
+    <arg name="report" value="full" />
+    <arg name="colors" />
+
+    <rule ref="./vendor/cakephp/cakephp-codesniffer/CakePHP" />
+
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120" />
+            <property name="absoluteLineLimit" value="0" />
+        </properties>
+        <exclude-pattern>./templates/*</exclude-pattern>
+    </rule>
+
+    <rule ref="Generic.WhiteSpace.ScopeIndent">
+        <properties>
+            <property name="exact" value="1" />
+        </properties>
+        <exclude-pattern>./templates/*</exclude-pattern>
+    </rule>
+
+    <rule ref="Squiz.ControlStructures.ControlSignature">
+        <properties>
+            <property name="requiredSpacesBeforeColon" value="0" />
+        </properties>
+    </rule>
+
+    <rule ref="Internal.NoCodeFound">
+        <exclude-pattern>./templates/*</exclude-pattern>
+    </rule>
+
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+        <exclude-pattern>./config/Migrations/*</exclude-pattern>
+        <exclude-pattern>./config/Seeds/*</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.Classes.ClassFileName.NoMatch">
+        <exclude-pattern>./config/Migrations/*</exclude-pattern>
+    </rule>
+    <rule ref="CakePHP.Commenting.FunctionComment.Missing">
+        <exclude-pattern>./config/Migrations/*</exclude-pattern>
+    </rule>
+
+    <rule ref="CakePHP.Formatting.BlankLineBeforeReturn">
+        <severity>0</severity>
+    </rule>
+</ruleset>
