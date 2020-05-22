@@ -154,12 +154,17 @@ class ErrorReporter
         $className = end($classNames);
 
         if ($request) {
+            $uri = $request->getUri();
+            $path = $uri->getPath();
+            if (isset($uri->base)) {
+                $path = $uri->base . $path;
+            }
             $subject = sprintf(
                 "[%s] %s (%s %s)",
                 $request->getHeaderLine('Host'),
                 $className,
                 $request->getMethod(),
-                $request->getUri()->getPath(),
+                $path,
             );
         } else {
             $subject = sprintf(

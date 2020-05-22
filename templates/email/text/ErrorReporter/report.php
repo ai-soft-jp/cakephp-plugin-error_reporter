@@ -7,10 +7,14 @@ error_reporting(0);
 
 echo "An error occured in processing:\n";
 if ($request) {
-    $path = $request->getUri()->getPath();
-    $query = $request->getUri()->getQuery();
+    $uri = $request->getUri();
+    $path = $uri->getPath();
+    $query = $uri->getQuery();
     if ($query !== '') {
         $path .= "?{$query}";
+    }
+    if (isset($uri->base)) {
+        $path = $uri->base . $path;
     }
     if ($request instanceof ServerRequest) {
         $remoteAddr = $request->clientIp();
