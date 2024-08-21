@@ -26,7 +26,7 @@ class ErrorReporterMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         try {
-            return $handler->handle($request, $handler);
+            return $handler->handle($request);
         } catch (Throwable $exception) {
             ErrorReporter::instance()->handleException($exception, $request);
             throw $exception;

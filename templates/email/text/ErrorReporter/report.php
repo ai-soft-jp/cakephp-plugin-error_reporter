@@ -1,9 +1,14 @@
 <?php
 use Aws\Exception\AwsException;
+use Cake\Core\Exception\CakeException;
 use Cake\Http\ServerRequest;
-use Psr\Message\Http\RequestInterface;
+use Psr\Http\Client\NetworkExceptionInterface;
+use Psr\Http\Client\RequestExceptionInterface;
+use Psr\Http\Message\RequestInterface;
 
 error_reporting(0);
+/** @var \Throwable $exception */
+/** @var \Cake\Http\ServerRequest|null $request */
 
 echo "An error occured in processing:\n";
 if ($request) {
@@ -45,16 +50,25 @@ do {
     }
     printf("Code: %s\n", $exception->getCode());
 
-    if (is_callable([$exception, 'getAttributes'])) {
+    if ($exception instanceof CakeException) {
         $attributes = $exception->getAttributes();
-        if (!empty($attributes)) {
+        if (is_array($attributes) && !empty($attributes)) {
             echo "\n";
             echo "--- Attributes\n";
             echo $this->Error->formatArray($attributes);
         }
     }
 
-    if (isset($exception->queryString)) {
+    if ($exception instanceof PDOException) {
+        $errorInfo = $exception->errorInfo;
+        if (is_array($errorInfo) && !empty($errorInfo)) {
+            echo "\n";
+            echo "--- PDO ErrorInfo\n";
+            echo $this->Error->formatArray($errorInfo);
+        }
+    }
+
+    if (isset($exception->queryString) && is_string($exception->queryString)) {
         echo "\n";
         echo "--- SQL\n";
         printf("%s\n", trim($exception->queryString));
@@ -71,7 +85,7 @@ do {
         echo "Command: {$exception->getCommand()->getName()}\n";
     }
 
-    if (is_callable([$exception, 'getRequest'])) {
+    if ($exception instanceof NetworkExceptionInterface || $exception instanceof RequestExceptionInterface || $exception instanceof AwsException) {
         $xreq = $exception->getRequest();
         if ($xreq instanceof RequestInterface) {
             echo "\n";

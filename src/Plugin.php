@@ -10,17 +10,9 @@ use Cake\Core\BasePlugin;
  */
 class Plugin extends BasePlugin
 {
-    /**
-     * Plugin name.
-     *
-     * @var string
-     */
-    protected $name = 'ErrorReporter';
+    /** The name of this plugin */
+    protected string $name = 'ErrorReporter';
 
-    /**
-     * Don't try to load routes.
-     *
-     * @var bool
-     */
+    /** Don't try to load routes */
     protected $routesEnabled = false;
 }

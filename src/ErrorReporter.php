@@ -9,7 +9,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\HttpException;
 use Cake\Http\Exception\MissingControllerException;
 use Cake\Log\Log;
-use Cake\Mailer\Email;
+use Cake\Mailer\Mailer;
 use Cake\Routing\Exception\MissingRouteException;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;
@@ -82,7 +82,7 @@ class ErrorReporter
         $this->_setConfig(...$args);
 
         $profile = $this->getConfig('profile');
-        if (!Email::getConfig($profile)) {
+        if (!Mailer::getConfig($profile)) {
             throw new RuntimeException(
                 "Missing email profile `{$profile}'. " .
                 "Add profile or specify profile at ErrorReporter.profile."
@@ -137,7 +137,6 @@ class ErrorReporter
             $this->_report($exception, $request);
         } catch (Throwable $nestedException) {
             $this->_nestedException($nestedException);
-            throw $nestedException;
         }
     }
 
@@ -175,7 +174,7 @@ class ErrorReporter
             );
         }
 
-        $email = new Email($this->getConfig('profile'));
+        $email = new Mailer($this->getConfig('profile'));
         $email->setSubject($subject);
         $email->viewBuilder()->setTemplate($this->getConfig('template'));
         $email->viewBuilder()->disableAutoLayout();
