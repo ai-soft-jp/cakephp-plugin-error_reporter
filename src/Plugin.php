@@ -14,5 +14,5 @@ class Plugin extends BasePlugin
     protected string $name = 'ErrorReporter';
 
     /** Don't try to load routes */
-    protected $routesEnabled = false;
+    protected bool $routesEnabled = false;
 }
