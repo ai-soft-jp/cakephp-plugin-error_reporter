@@ -11,7 +11,7 @@ use Cake\Core\BasePlugin;
 class Plugin extends BasePlugin
 {
     /** The name of this plugin */
-    protected string $name = 'ErrorReporter';
+    protected ?string $name = 'ErrorReporter';
 
     /** Don't try to load routes */
     protected bool $routesEnabled = false;
