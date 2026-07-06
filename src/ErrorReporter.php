@@ -27,7 +27,7 @@ class ErrorReporter
     /**
      * Default configuration
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'profile' => 'errorReport',
         'template' => 'ErrorReporter.ErrorReporter/report',
         'ignoreExceptions' => [
@@ -49,7 +49,7 @@ class ErrorReporter
     /**
      * Singleton
      */
-    protected static $_instance = null;
+    protected static ?ErrorReporter $_instance = null;
 
     /**
      * Constructor
@@ -77,7 +77,7 @@ class ErrorReporter
      * @param array $args Arguments.
      * @return \ErrorReporter\ErrorReporter $this
      */
-    public function setConfig(...$args): ErrorReporter
+    public function setConfig(array ...$args): ErrorReporter
     {
         $this->_setConfig(...$args);
 
@@ -85,7 +85,7 @@ class ErrorReporter
         if (!Mailer::getConfig($profile)) {
             throw new RuntimeException(
                 "Missing email profile `{$profile}'. " .
-                "Add profile or specify profile at ErrorReporter.profile."
+                'Add profile or specify profile at ErrorReporter.profile.',
             );
         }
 
@@ -159,7 +159,7 @@ class ErrorReporter
                 $path = $uri->base . $path;
             }
             $subject = sprintf(
-                "[%s] %s (%s %s)",
+                '[%s] %s (%s %s)',
                 $request->getHeaderLine('Host'),
                 $className,
                 $request->getMethod(),
@@ -167,7 +167,7 @@ class ErrorReporter
             );
         } else {
             $subject = sprintf(
-                "[%s] %s (Command Line: %s)",
+                '[%s] %s (Command Line: %s)',
                 trim(`hostname`),
                 $className,
                 $GLOBALS['argv'][0] ?? '(unknown)',
@@ -201,7 +201,7 @@ class ErrorReporter
             get_class($exception),
             $exception->getMessage(),
             $exception->getFile(),
-            $exception->getLine()
+            $exception->getLine(),
         );
         $message .= "\nStack Trace:\n" . $exception->getTraceAsString() . "\n\n";
 

@@ -14,17 +14,13 @@ class ErrorHelper extends Helper
 {
     /**
      * Path prefixes
-     *
-     * @var string
      */
-    protected $pathPrefixes;
+    protected array $pathPrefixes;
 
     /**
      * Path regexs
-     *
-     * @var string
      */
-    protected $pathRegex;
+    protected string $pathRegex;
 
     /**
      * Initialize helper.
@@ -117,12 +113,12 @@ class ErrorHelper extends Helper
             if (isset($bt['file'])) {
                 $row .= $this->filterPath($bt['file']);
             } else {
-                $row .= "[internal function]";
+                $row .= '[internal function]';
             }
             if (isset($bt['line'])) {
                 $row .= "({$bt['line']})";
             }
-            $row .= ": ";
+            $row .= ': ';
             if (isset($bt['class'])) {
                 $row .= $bt['class'];
             }

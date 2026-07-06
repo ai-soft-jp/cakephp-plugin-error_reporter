@@ -1,5 +1,5 @@
 {
-    "name": "ai-soft/cake-error-reporter",
+    "name": "ai-soft-jp/cake-error-reporter",
     "description": "ErrorReporter for CakePHP",
     "keywords": ["cakephp"],
     "type": "cakephp-plugin",
