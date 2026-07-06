@@ -1,5 +1,5 @@
 {
-    "name": "ai-soft/cake-error-reporter",
+    "name": "ai-soft-jp/cake-error-reporter",
     "description": "ErrorReporter for CakePHP",
     "keywords": ["cakephp"],
     "type": "cakephp-plugin",
@@ -22,6 +22,9 @@
         "cs-fix": "phpcbf --colors -p src/"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }
