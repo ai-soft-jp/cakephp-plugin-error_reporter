@@ -168,7 +168,7 @@ class ErrorReporter
         } else {
             $subject = sprintf(
                 '[%s] %s (Command Line: %s)',
-                trim(`hostname`),
+                trim(shell_exec('hostname -s')),
                 $className,
                 $GLOBALS['argv'][0] ?? '(unknown)',
             );
