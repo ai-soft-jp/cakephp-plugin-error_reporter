@@ -8,7 +8,7 @@ use Cake\Core\BasePlugin;
 /**
  * Plugin class for ErrorReporter
  */
-class Plugin extends BasePlugin
+class ErrorReporterPlugin extends BasePlugin
 {
     /**
      * The name of this plugin
